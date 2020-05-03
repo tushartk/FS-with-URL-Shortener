@@ -1,0 +1,29 @@
+Pipe17 Summer 2020 Internship Frontend Homework
+We are interested in creating a browser based file system, functionally similar to Google Drive or Dropbox’s web interface, or to a folder browsing structure you might find on a Windows or macOS device.
+
+A user should be able to:
+
+- Create folders and subfolders,
+- Create files in the folders, (files are just an item with name)
+- View the list contents of a folder,
+- Delete folders and files,
+- Rename folders and files.
+
+Frontend: We would like this file system created using React as the front-end framework. We expect the project to follow the latest React best practices for code organization. Here are some resources for you to get started:
+https://reactjs.org/tutorial/tutorial.html
+https://react-bootstrap.github.io/
+
+Bonus: Deploy the project onto the cloud
+Bonus: Save the data locally so close the browser will not lose the created files and folders
+Bonus: Save the data on server side
+
+
+
+Pipe17 Summer 2020 Internship Backend Homework
+
+Design and implement a short url service that can 
+convert a long url to a short url and redirect short url to long url address.
+Like https://bitly.com/ http://tinyurl.com/
+Please provide API documentation.
+Bonus: allow edit and delete.
+Bonus: deploy it on the cloud

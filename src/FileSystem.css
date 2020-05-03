@@ -1,0 +1,22 @@
+.FileSystem {
+    text-align: center;
+    padding-top: 0.5%;
+}
+.all-button-div {
+    padding: 1% 1% 1% 1%;
+    border-width: .2rem .2rem 0;
+    border-radius: 8px 8px 0 0;
+    background-color: #e9ecef;
+    border-bottom: 1px solid lightgray;
+}
+
+.alert-msg {
+    position: absolute !important;
+    width: 25%;
+    top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    z-index: 100000;
+}

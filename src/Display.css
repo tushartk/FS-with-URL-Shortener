@@ -1,0 +1,30 @@
+.folder-card:hover {
+    cursor: pointer;
+}
+
+.file-links:hover {
+    cursor: pointer;
+}
+
+.file-folder-heading {
+    font-family: "Courier New", Courier, monospace;
+    padding-top: 2%;
+}
+
+.ff-col-borders {
+    border: 1px solid lightgray;
+    border-radius: 1em;
+}
+
+.folders-col {
+    padding-left: 1%;
+    padding-bottom: 1%;
+}
+.files-col {
+    padding-right: 1%;
+    padding-bottom: 1%;
+}
+
+.ren-del-div {
+    cursor: pointer;
+}
