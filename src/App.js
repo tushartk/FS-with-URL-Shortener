@@ -17,8 +17,8 @@ class App extends Component {
         return (
             <div className="App">
                 <Container fluid>
-                    <Tabs defaultActiveKey="filesystem" transition={false} id="noanim-tab-example">
-                        <Tab eventKey="filesystem" title="File System">
+                    <Tabs defaultActiveKey="fileSystem" transition={false} id="noanim-tab-example">
+                        <Tab eventKey="fileSystem" title="File System">
                             <FileSystem />
                         </Tab>
                         <Tab eventKey="urlShortener" title="Url Shortener">

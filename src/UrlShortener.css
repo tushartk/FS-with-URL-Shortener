@@ -1,3 +1,7 @@
+.UrlShortener {
+    padding-top: 0.5%;
+}
+
 .alert-msg {
     position: absolute !important;
     width: 25%;
@@ -7,4 +11,17 @@
     left: 0;
     right: 0;
     z-index: 100000;
+}
+
+.delete-record:hover {
+    cursor: pointer;
+}
+
+.short-url-heading {
+    padding-top: 1%;
+    padding-left: 2%;
+}
+
+.short-url-para {
+    padding-left: 2%;
 }

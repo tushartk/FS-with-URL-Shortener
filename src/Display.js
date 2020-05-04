@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import './Display.css';
-import {Col, Form, Modal, Row} from "react-bootstrap";
-import Card from "react-bootstrap/Card";
+import {Col, Form, Modal, Row, Button, Card} from "react-bootstrap";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFolder, faFile, faTimesCircle, faEdit} from '@fortawesome/free-solid-svg-icons'
 import {chunk} from 'lodash';
-import Button from "react-bootstrap/Button";
 
 class Display extends Component {
     constructor(props) {

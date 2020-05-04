@@ -30,3 +30,5 @@ If you would like to use MongoDB to store, please set the variable USE_MONGO to 
 3. **Database** \
 Run the following to get mongodb up and running if necessary:\
 `docker run -p 27017:27017 --name mongodb mongo`
+
+To configure the server url to hit from the frontend, please edit the _url_ variable in url.json file.

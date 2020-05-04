@@ -4,6 +4,7 @@ import "./FileSystem.css";
 import {find} from "lodash";
 import {Button, Form, Modal, Breadcrumb} from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
+import urlData from './url.json';
 
 class FileSystem extends Component {
     constructor(props) {
@@ -38,6 +39,7 @@ class FileSystem extends Component {
     }
 
     componentDidMount = () => {
+        console.log(urlData.url)
         window.addEventListener('beforeunload', this.beforeunload);
         console.log(localStorage.getItem('dataStored'))
         const curDirInfo = (localStorage.getItem('dataStored') === null) ?
@@ -58,7 +60,7 @@ class FileSystem extends Component {
     }
 
     fetchDataFromServer = () => {
-        const url = 'http://localhost:5000/fetch'
+        const url = urlData.url + 'fetch'
         fetch(url)
             .then(response => response.json())
             .then(data => {
@@ -77,7 +79,7 @@ class FileSystem extends Component {
     }
 
     saveDataToServer = () => {
-        const url = 'http://localhost:5000/store'
+        const url = urlData.url + 'store'
         fetch(url, {
             method: 'POST', // or 'PUT'
             headers: {
