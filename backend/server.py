@@ -4,16 +4,17 @@ import json
 from hashlib import blake2b
 from pymongo import MongoClient
 import re
+import random
 
 # flask initialization
-app = Flask(__name__)
+app = Flask(__name__)   
 CORS(app)
 
 # Mongo initialization
 client = MongoClient('localhost', 27017)
 db = client['pipe17']
 dbCollection = db['urlDb']
-USE_MONGO = False
+USE_MONGO = True
 
 # For the URL shortener
 DIGEST_S = 9
@@ -104,17 +105,9 @@ def shorten_url():
 
     short_url = shorten(url)
     if USE_MONGO:
-        if not dbCollection.find_one({'short_url': short_url}):
-            dbCollection.insert_one({'short_url': short_url, 'long_url': url})
-        else:
-            return jsonify({'body': request.url_root + short_url, 
-            'message': 'URL was already in database'})
+        dbCollection.insert_one({'short_url': short_url, 'long_url': url})
     else:
-        if short_url in shortened_urls:
-            return jsonify({'body': request.url_root + short_url, 
-            'message': 'URL was already in database'})
-        else:
-            shortened_urls[short_url] = url
+        shortened_urls[short_url] = url
     return jsonify({'body': request.url_root + short_url})
 
 @app.route('/<aliasUrl>', methods=['GET'])
@@ -198,7 +191,6 @@ def delete_url():
     url = content['short_url']
     short_hash = url.replace(request.url_root, '')
     if USE_MONGO:
-        print('here')
         dbCollection.delete_one({'short_url': short_hash})
     else:
         del shortened_urls[short_hash]
@@ -212,6 +204,16 @@ def shorten(url):
     """
     url_hash = blake2b(str.encode(url), digest_size=DIGEST_S)
     url_dig_hex = url_hash.hexdigest()[:9]
+    if USE_MONGO:
+        while dbCollection.find_one({'short_url': url_dig_hex}):
+            url += str(random.randint(0, 9))
+            url_hash = blake2b(str.encode(url), digest_size=DIGEST_S)
+            url_dig_hex = url_hash.hexdigest()[:9]
+    else:
+        while url_dig_hex in shortened_urls:
+            url += str(random.randint(0, 9))
+            url_hash = blake2b(str.encode(url), digest_size=DIGEST_S)
+            url_dig_hex = url_hash.hexdigest()[:9]
     return url_dig_hex
 
 def check_url_validity(url):

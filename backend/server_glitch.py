@@ -3,6 +3,7 @@ from flask_cors import CORS
 import json
 from hashlib import blake2b
 from pymongo import MongoClient
+import random
 import re
 import os
 
@@ -114,13 +115,8 @@ def shorten_url():
 
     short_url = shorten(url)
     if USE_MONGO:
-        if not dbCollection.find_one({'short_url': short_url}):
-            dbCollection.insert_one({'short_url': short_url, 'long_url': url})
-        else:
-            return jsonify({'body': request.url_root + short_url, 
-            'message': 'URL was already in database'})
+        dbCollection.insert_one({'short_url': short_url, 'long_url': url})
     else:
-
         if not os.path.exists(URL_DATA_FILE):
             os.mknod(URL_DATA_FILE)
             shortened_urls = {}
@@ -129,14 +125,10 @@ def shorten_url():
                 shortened_urls = json.load(f)
             f.close()
 
-        if short_url in shortened_urls:
-            return jsonify({'body': request.url_root + short_url, 
-            'message': 'URL was already in database'})
-        else:
-            shortened_urls[short_url] = url
-            with open(URL_DATA_FILE, 'w') as f:
-                json.dump(shortened_urls, f)
-            f.close()
+        shortened_urls[short_url] = url
+        with open(URL_DATA_FILE, 'w') as f:
+            json.dump(shortened_urls, f)
+        f.close()
     return jsonify({'body': request.url_root + short_url})
 
 @app.route('/<aliasUrl>', methods=['GET'])
@@ -252,6 +244,27 @@ def shorten(url):
     """
     url_hash = blake2b(str.encode(url), digest_size=DIGEST_S)
     url_dig_hex = url_hash.hexdigest()[:9]
+    if USE_MONGO:
+        while dbCollection.find_one({'short_url': url_dig_hex}):
+            url += str(random.randint(0, 9))
+            url_hash = blake2b(str.encode(url), digest_size=DIGEST_S)
+            url_dig_hex = url_hash.hexdigest()[:9]
+    else:
+        if not os.path.exists(URL_DATA_FILE):
+            os.mknod(URL_DATA_FILE)
+            shortened_urls = {}
+            with open(URL_DATA_FILE, 'w') as f:
+                json.dump(shortened_urls, f)
+            f.close()
+        else:
+            with open(URL_DATA_FILE) as f:
+                shortened_urls = json.load(f)
+            f.close()
+        while url_dig_hex in shortened_urls:
+            url += str(random.randint(0, 9))
+            url_hash = blake2b(str.encode(url), digest_size=DIGEST_S)
+            url_dig_hex = url_hash.hexdigest()[:9]
+
     return url_dig_hex
 
 def check_url_validity(url):

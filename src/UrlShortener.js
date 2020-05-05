@@ -92,16 +92,7 @@ class UrlShortener extends Component {
             .then(response => response.json())
             .then(data => {
                 if (data.message) {
-                    if (data.body) {
-                        this.showAlertDialog(data.message, 'success')
-                        this.setState({
-                            shortenedUrl: data.body
-                        })
-                        this.fetchAllUrlData()
-                    } else {
-                        // to Show the error message if it was an error
-                        this.showAlertDialog(data.message, 'danger')
-                    }
+                    this.showAlertDialog(data.message, 'danger')
                 } else {
                     // else show the shortened url
                     this.setState({
